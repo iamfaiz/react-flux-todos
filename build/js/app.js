@@ -20386,12 +20386,18 @@ var TodosApp = function (_React$Component) {
     _createClass(TodosApp, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var _this2 = this;
-
-            _TodoStore2.default.on('change', function () {
-                _this2.setState({
-                    todos: _TodoStore2.default.getAll()
-                });
+            _TodoStore2.default.on('change', this.getTodos.bind(this));
+        }
+    }, {
+        key: 'componentWillUnMount',
+        value: function componentWillUnMount() {
+            _TodoStore2.default.removeListener('change', this.getTodos.bind(this));
+        }
+    }, {
+        key: 'getTodos',
+        value: function getTodos() {
+            this.setState({
+                todos: _TodoStore2.default.getAll()
             });
         }
     }, {

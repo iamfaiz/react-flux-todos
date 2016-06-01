@@ -22,10 +22,16 @@ class TodosApp extends React.Component {
     }
 
     componentWillMount() {
-        TodoStore.on('change', () => {
-            this.setState({
-                todos: TodoStore.getAll()
-            });
+        TodoStore.on('change', this.getTodos.bind(this));
+    }
+
+    componentWillUnMount() {
+        TodoStore.removeListener('change', this.getTodos.bind(this));
+    }
+
+    getTodos() {
+        this.setState({
+            todos: TodoStore.getAll()
         });
     }
 
